@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://charonycl.github.io</id>
+    <title>ycl快学习</title>
+    <updated>2023-03-13T13:46:16.262Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://charonycl.github.io"/>
+    <link rel="self" href="https://charonycl.github.io/atom.xml"/>
+    <subtitle>根本停不下来</subtitle>
+    <logo>https://charonycl.github.io/images/avatar.png</logo>
+    <icon>https://charonycl.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, ycl快学习</rights>
+    <entry>
+        <title type="html"><![CDATA[Vue props使用]]></title>
+        <id>https://charonycl.github.io/post/vue-props-shi-yong/</id>
+        <link href="https://charonycl.github.io/post/vue-props-shi-yong/">
+        </link>
+        <updated>2023-03-13T08:24:19.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="props使用总结">props使用总结</h2>
+<ul>
+<li>使用props给予组件影响其显示的初始状态，实现组件的动态化</li>
+<li>props是一种单向数据绑定，组件永远不会改变自己的props的值</li>
+</ul>
+<h3 id="注册props的方式">注册props的方式</h3>
+<ul>
+<li>第一种方式是，以字符串数组的方式列出 props，数组中的每个实体对应一个 prop 名称。</li>
+<li>第二种方法是对象注册法。将 props 定义为一个对象，每个 key 对应于 prop 名称。将 props 列为对象允许指定默认值，将 props 标记为 required，执行基本的对象类型 (特别是 JavaScript 基本类型) ，并执行简单的 prop 校验。<br>
+<strong>注意：</strong> prop 验证只能在 development 模式下进行，所以你不能在生产环境中严格依赖它。此外，prop 验证函数在组件实例创建之前被调用，因此它们不能访问组件状态 (或其他 props)</li>
+</ul>
+<h3 id="不修改组件的props值的原因">不修改组件的props值的原因</h3>
+<ol>
+<li>
+<p>组件修改 props 会造成程序调试困难。如果一个值被<strong>传递进多个子组件</strong>，将很难定位这个值是在哪里被修改的。</p>
+</li>
+<li>
+<p>修改 props 会造成组件重新渲染。所以，一个组件里突变的 props 会触发组件重新渲染，这可能会反过来再次触发 props 突变。<br>
+<strong>解决方案：</strong> 使用data 属性是你来在组件中管理本地状态</p>
+<h4 id="vue的数据对象data">Vue的数据对象data()</h4>
+<ol>
+<li>data 属性是一个函数。这是为了在运行时保持组件的每个实例的数据值是唯一的：<br>
+为每个组件实例单独调用函数。如果将数据声明为仅一个对象，则该组件的所有实例将共享相同的值。这是 Vue 注册组件方式的副作用。</li>
+<li>使用 <strong>this</strong> 从内部数据访问组件的 props 和其他属性<br>
+由于 this 在箭头函数中的工作方式（绑定到父级的上下文），如果使用箭头函数，您将无法从内部 data 访问任何必要的属性。因此，不要对 data 属性使用箭头函数。</li>
+<li>Vue把所有的 props 直接绑定到组件实例上，所以我们调用时不必经过函数名。这是为了让属性可用于模板。缺点是需要在这些属性中<strong>保持键的唯一性</strong>。
+<ul>
+<li>保持索引的唯一性实现方法：使用 lodash 包的 uniqueid() 方法来帮助保持索引的唯一性。此包导出一个函数，该函数接收字符串并将唯一整数追加到前缀的末尾。这足以保持组件 id 的唯一性。 <code>npm install --save lodash.uniqueid</code>然后将包导入组件中，将字段id添加到数据属性中。</li>
+</ul>
+</li>
+<li>将属性附加到组件中：使用v-bind将js表达式绑定到HTML元素和组件，v-bind语法<br>
+<code>v-bind:attribute=&quot;expression&quot;</code><br>
+或者简便写法:<br>
+<code>:attribute=&quot;expression&quot;</code></li>
+</ol>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[计算机网络练习]]></title>
+        <id>https://charonycl.github.io/post/ji-suan-ji-wang-luo-lian-xi/</id>
+        <link href="https://charonycl.github.io/post/ji-suan-ji-wang-luo-lian-xi/">
+        </link>
+        <updated>2023-02-22T00:14:48.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<!-- more -->
+<p>##区分不同的ip地址<br>
+<img src="https://charonycl.github.io/post-images/1677024957199.png" alt="" loading="lazy"><br>
+<img src="https://charonycl.github.io/post-images/1677024979906.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[软件工程经济学复习]]></title>
+        <id>https://charonycl.github.io/post/ruan-jian-gong-cheng-jing-ji-xue-fu-xi/</id>
+        <link href="https://charonycl.github.io/post/ruan-jian-gong-cheng-jing-ji-xue-fu-xi/">
+        </link>
+        <updated>2023-02-20T11:16:56.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="软件项目开发成本构成">🚩软件项目开发成本构成：</h1>
+<h2 id="直接成本">直接成本</h2>
+<ul>
+<li>直接人力成本：项目组人员的工资等</li>
+<li>直接非人力成本：办公费，差旅费等</li>
+</ul>
+<h2 id="间接成本">间接成本</h2>
+<ul>
+<li>间接人力成本：非项目组人员人力资源费用等</li>
+<li>间接非人力成本：场地房租，水电物业等</li>
+</ul>
+<h1 id="如何降低软件项目开发成本">🚩如何降低软件项目开发成本</h1>
+<h2 id="降低软件开发的规模或者复杂度">降低软件开发的规模或者复杂度</h2>
+<ul>
+<li>理解业务需求</li>
+<li>合理分解</li>
+<li>组件代码复用，降低人工编写的代码量</li>
+<li>使用面向服务的架构提升质量</li>
+</ul>
+<h2 id="改进软件开发过程">改进软件开发过程</h2>
+<ul>
+<li>把瀑布过程转化为迭代过程，减少废品和返工</li>
+<li>坚持优先关注架构</li>
+<li>发现和评估、改进开发低效率的区域</li>
+<li>支持过程薄弱区的改进</li>
+</ul>
+<h2 id="建立更优秀的团队">建立更优秀的团队</h2>
+<ul>
+<li>提高个人技能</li>
+</ul>
+<h1 id="迭代式开发和瀑布式开发相比为什么迭代式开发比瀑布式更好">🚩迭代式开发和瀑布式开发相比为什么迭代式开发比瀑布式更好</h1>
+<ul>
+<li>可以更早的发现变更的需求，不断纠正航向</li>
+<li>软件开发所交付的结果每次都有所递增</li>
+<li>客户的参与程度更高，不把问题全部堆积到项目后期来解决，降低了项目风险</li>
+</ul>
+<h1 id="资产四大类">🚩资产四大类</h1>
+<h2 id="固定资产">固定资产</h2>
+<ul>
+<li>图书，长期发挥作用，长期保有形态</li>
+</ul>
+<h2 id="无形资产">无形资产</h2>
+<ul>
+<li>技术，版权</li>
+</ul>
+<h2 id="流动资产">流动资产</h2>
+<ul>
+<li>打印纸，易耗品</li>
+</ul>
+<h2 id="递延资产">递延资产</h2>
+<ul>
+<li>筹建期间发生的费用，差旅，办公，员工培训</li>
+</ul>
+]]></content>
+    </entry>
+</feed>
