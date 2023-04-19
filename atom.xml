@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://charonycl.github.io</id>
+    <title>ycl快学习</title>
+    <updated>2023-04-19T08:30:51.551Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://charonycl.github.io"/>
+    <link rel="self" href="https://charonycl.github.io/atom.xml"/>
+    <subtitle>根本停不下来</subtitle>
+    <logo>https://charonycl.github.io/images/avatar.png</logo>
+    <icon>https://charonycl.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, ycl快学习</rights>
+    <entry>
+        <title type="html"><![CDATA[移动零 (快慢指针)]]></title>
+        <id>https://charonycl.github.io/post/yi-dong-ling-kuai-man-zhi-zhen/</id>
+        <link href="https://charonycl.github.io/post/yi-dong-ling-kuai-man-zhi-zhen/">
+        </link>
+        <updated>2023-04-19T07:34:33.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://leetcode.cn/problems/move-zeroes/">https://leetcode.cn/problems/move-zeroes/</a></p>
+<p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。<br>
+请注意 ，必须在不复制数组的情况下原地对数组进行操作。</p>
+<pre><code>class Solution {
+    public void moveZeroes(int[] nums) {
+        int fast = 0 ;
+        int slow = 0;
+        while(fast &lt; nums.length){
+            if( nums[fast] == 0 ){
+                fast++;
+            }else{
+                nums[slow] == nums[fast];
+                slow++;
+                fast++;
+            }
+        for(int i = slow ; i &lt;nums.lenght; i++){
+            nums[slow] = 0;
+        }
+    }
+}
+</code></pre>
+<p>fast指针遇到0直接往前，遇到非0元素，将值赋值给slow指针，fast和slow都往前走一步。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[axios封装实现缓存]]></title>
+        <id>https://charonycl.github.io/post/axios-feng-zhuang-shi-xian-huan-cun/</id>
+        <link href="https://charonycl.github.io/post/axios-feng-zhuang-shi-xian-huan-cun/">
+        </link>
+        <updated>2023-04-12T11:35:27.000Z</updated>
+        <content type="html"><![CDATA[<p>在封装了的axios中实现接口缓存，可以使用axios的interceptors拦截器来实现。interceptors允许我们拦截请求和响应，并在发送请求或接收响应之前对它们进行处理。通过在请求拦截器中检查缓存是否存在，可以避免每次发送请求时都要重新获取数据。</p>
+<p>以下是一个示例代码，演示了如何在封装的axios中实现接口缓存：</p>
+<pre><code>import axios from 'axios';
+
+// 定义缓存对象
+const cache = {};
+
+// 创建一个axios实例
+const instance = axios.create({
+  // 配置axios实例
+});
+
+// 添加请求拦截器
+instance.interceptors.request.use(config =&gt; {
+  // 检查缓存中是否存在数据，如果存在则直接返回缓存数据
+  if (cache[config.url]) {
+    return Promise.resolve(cache[config.url]);
+  }
+  return config;
+}, error =&gt; {
+  return Promise.reject(error);
+});
+
+// 添加响应拦截器
+instance.interceptors.response.use(response =&gt; {
+  // 将API响应数据缓存到缓存对象中
+  cache[response.config.url] = response.data;
+  return response;
+}, error =&gt; {
+  return Promise.reject(error);
+});
+
+export default instance;
+</code></pre>
+<p>在这个示例中，我们首先定义了一个名为&quot;cache&quot;的对象，用于缓存接口数据。然后，我们创建了一个axios实例，并添加了请求拦截器和响应拦截器。在请求拦截器中，我们检查缓存中是否存在数据，如果存在则直接返回缓存数据，否则返回原始请求配置。在响应拦截器中，我们将API响应数据缓存到缓存对象中，以便下次访问时可以快速加载数据。</p>
+<p>使用封装了的axios进行接口请求时，可以像使用普通的axios一样发送请求，同时也可以享受到接口缓存的好处。例如：</p>
+<pre><code>import axios from './myAxios';
+
+// 发送API请求
+axios.get('/api/data')
+  .then(response =&gt; {
+    // 处理API响应数据
+  })
+  .catch(error =&gt; {
+    console.error(error);
+  });
+</code></pre>
+<p>在这个示例中，我们使用封装的axios发送API请求，如果缓存中已经存在数据，则直接返回缓存数据，否则发送API请求获取数据，并将数据缓存到缓存对象中。最后，我们处理API响应数据或打印错误信息，以便调试和错误处理。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[接口轮询]]></title>
+        <id>https://charonycl.github.io/post/js-shi-xian-jie-kou-lun-xun/</id>
+        <link href="https://charonycl.github.io/post/js-shi-xian-jie-kou-lun-xun/">
+        </link>
+        <updated>2023-04-12T11:22:37.000Z</updated>
+        <content type="html"><![CDATA[<p>使用定时器函数实现接口轮询</p>
+<pre><code>// 定义轮询函数
+function pollAPI() {
+  // 发送API请求
+  axios.get('/api/data')
+    .then(response =&gt; {
+      // 处理API响应
+      console.log(response.data);
+    })
+    .catch(error =&gt; {
+      console.error(error);
+    });
+}
+
+// 每隔10秒钟执行一次轮询函数
+setInterval(pollAPI, 10000);
+</code></pre>
+<p>在Vue中实现接口轮询，可以使用Vue生命周期函数中的&quot;created&quot;或&quot;mounted&quot;钩子函数以及JavaScript的定时器函数setInterval()来实现。以下是一个示例代码，演示了如何在Vue组件中实现接口轮询：</p>
+<pre><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;{{ item.name }}&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import axios from 'axios';
+
+export default {
+  name: 'MyComponent',
+  data() {
+    return {
+      items: []
+    };
+  },
+  created() {
+    // 每隔5秒钟执行一次轮询函数
+    setInterval(this.pollAPI, 5000);
+  },
+  methods: {
+    pollAPI() {
+      // 发送API请求
+      axios.get('/api/data')
+        .then(response =&gt; {
+          // 更新数据
+          this.items = response.data;
+        })
+        .catch(error =&gt; {
+          console.error(error);
+        });
+    }
+  }
+};
+&lt;/script&gt;
+</code></pre>
+<p>在这个示例中，我们定义了一个名为&quot;MyComponent&quot;的Vue组件，使用&quot;created&quot;钩子函数来在组件创建时执行轮询函数。在轮询函数中，我们使用axios库发送API请求，并在响应成功时更新组件的数据。然后，我们使用setInterval()函数，每隔5秒钟调用一次轮询函数，以实现接口轮询的功能。</p>
+<p>需要注意的是，在Vue组件中使用setInterval()函数时，需要使用箭头函数或使用bind()方法将&quot;this&quot;绑定到组件实例，以确保在定时器回调函数中可以访问组件实例的数据和方法。</p>
+<p>另外，为了避免内存泄漏，当组件销毁时，需要使用clearInterval()函数清除定时器。可以使用Vue生命周期函数中的&quot;beforeDestroy&quot;钩子函数来实现这个功能，例如：</p>
+<pre><code>export default {
+  name: 'MyComponent',
+  created() {
+    // 每隔5秒钟执行一次轮询函数
+    this.intervalId = setInterval(this.pollAPI, 5000);
+  },
+  beforeDestroy() {
+    // 销毁定时器
+    clearInterval(this.intervalId);
+  },
+  // ...
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ElementUI表格不能渲染数据]]></title>
+        <id>https://charonycl.github.io/post/elementui-biao-ge-bu-neng-xuan-ran-shu-ju/</id>
+        <link href="https://charonycl.github.io/post/elementui-biao-ge-bu-neng-xuan-ran-shu-ju/">
+        </link>
+        <updated>2023-04-12T07:14:03.000Z</updated>
+        <content type="html"><![CDATA[<p>ElementUI版本太高了，降版本</p>
+<pre><code> &quot;element-ui&quot;: &quot;^2.15.13&quot;,
+</code></pre>
+<pre><code>cnpm install element-ui@2.15.13
+</code></pre>
+<ul>
+<li>没换成功的话，就把node_modules删掉，执行 <code>cnpm install</code></li>
+<li>删除node_modules时，由于权限问题，需要把vscode关掉再删</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[height 100% 不生效]]></title>
+        <id>https://charonycl.github.io/post/height-100-bu-sheng-xiao/</id>
+        <link href="https://charonycl.github.io/post/height-100-bu-sheng-xiao/">
+        </link>
+        <updated>2023-04-10T08:54:23.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>设置父元素高度</li>
+</ul>
+<pre><code>html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+}
+</code></pre>
+<ul>
+<li>解决方法二：不用设置父元素高度，通过设置定位（fixed或absolute）解决</li>
+</ul>
+<pre><code>. /*绝对定位，相对于父级元素进行定位*/
+        position: absolute;
+        /*固定定位,相对于浏览器窗口进行定位*/
+        /*position: fixed;*/
+        width:100%;
+        height: 100%;
+        background: yellow;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue跳转打开新页面]]></title>
+        <id>https://charonycl.github.io/post/vue-tiao-zhuan-da-kai-xin-ye-mian/</id>
+        <link href="https://charonycl.github.io/post/vue-tiao-zhuan-da-kai-xin-ye-mian/">
+        </link>
+        <updated>2023-04-10T07:05:38.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>绑定事件</li>
+</ul>
+<pre><code>&lt;div class=&quot;list-detail&quot; @click=&quot;ProductDetail(product)&quot;&gt;&lt;/div&gt;
+</code></pre>
+<ul>
+<li>定义跳转方法</li>
+</ul>
+<pre><code>//跳转商品详情页面
+        ProductDetail(product){
+          let Detail= this.$router.resolve({
+            //要跳转的页面的名称
+            name:&quot;ProductDetail&quot;,
+            //传参
+            query:{&quot;productId&quot;:product.id,&quot;skuCode&quot;:product.sku_code}
+          })
+          //以新窗口打开
+          window.open(Detail.href,'_blank')
+        }
+</code></pre>
+<ul>
+<li>跳转后页面接收参数</li>
+</ul>
+<pre><code>          getProductById(){
+          	//接参
+            let productId= this.$route.query.productId;
+            let skuCode= this.$route.query.skuCode;
+           
+          },
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue创建的项目更改页签]]></title>
+        <id>https://charonycl.github.io/post/vue-chuang-jian-de-xiang-mu-geng-gai-ye-qian/</id>
+        <link href="https://charonycl.github.io/post/vue-chuang-jian-de-xiang-mu-geng-gai-ye-qian/">
+        </link>
+        <updated>2023-04-07T03:40:40.000Z</updated>
+        <content type="html"><![CDATA[<p>先把页签地址改为项目路径下的地址，然后页签就变称自己设置的了</p>
+<pre><code>  &lt;!-- &lt;link rel=&quot;icon&quot; href=&quot;&lt;%= BASE_URL %&gt;favicon.ico&quot;&gt; --&gt;
+    &lt;link rel=&quot;icon&quot; href=&quot;../public/favicon.ico&quot;&gt;
+</code></pre>
+<p>然后再把导入方式改回来，页签就改成功了，估计是缓存的问题吧，暂时不清楚</p>
+<pre><code> &lt;link rel=&quot;icon&quot; href=&quot;&lt;%= BASE_URL %&gt;favicon.ico&quot;&gt;
+    &lt;!-- &lt;link rel=&quot;icon&quot; href=&quot;../public/favicon.ico&quot;&gt; --&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用码云管理仓库]]></title>
+        <id>https://charonycl.github.io/post/shi-yong-ma-yun-guan-li-cang-ku/</id>
+        <link href="https://charonycl.github.io/post/shi-yong-ma-yun-guan-li-cang-ku/">
+        </link>
+        <updated>2023-04-06T12:55:45.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="添加公钥">添加公钥</h2>
+<ul>
+<li>生成公钥（注意git环境变量问题）</li>
+<li>头像-&gt;设置-&gt;左边安全设置-&gt;ssh公钥</li>
+<li>点击查看怎样生成公钥，按照步骤来，生成公钥后去对应的文件夹下找到公钥复制添加</li>
+</ul>
+<h2 id="添加仓库">添加仓库</h2>
+<p><strong>注意：</strong> 不要选设置模板</p>
+<ul>
+<li>创建成功后打开项目的PowerShell</li>
+<li>git status 查看项目状态</li>
+<li>git add . 提交所有文件</li>
+<li>git commit -m &quot;add files&quot; 在本地提交一次项目</li>
+<li>git remote add origin https://gitee.com/vsdeveloper/仓库名.git</li>
+<li>git push -u origin master 将本地仓库和远程仓库关联</li>
+<li>成功上传到码云</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Vue3引入axios]]></title>
+        <id>https://charonycl.github.io/post/vue3-yin-ru-axios/</id>
+        <link href="https://charonycl.github.io/post/vue3-yin-ru-axios/">
+        </link>
+        <updated>2023-04-04T09:03:47.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>下载依赖axios</li>
+</ul>
+<pre><code>cnpm install axios --save
+</code></pre>
+<ul>
+<li>下载依赖vue-axios----将axios集成到Vue.js的小包装器</li>
+</ul>
+<pre><code>cnpm install vue-axios --save
+</code></pre>
+<ul>
+<li>配置main.js</li>
+</ul>
+<pre><code>import { createApp } from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import App from './App.vue';
+
+const app = createApp(App)
+app.
+    use(VueAxios,axios).
+    mount('#app')
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Element-ui]]></title>
+        <id>https://charonycl.github.io/post/element-ui/</id>
+        <link href="https://charonycl.github.io/post/element-ui/">
+        </link>
+        <updated>2023-03-27T09:06:20.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="elementui全部引入-vue3">elementui全部引入 （Vue3）</h2>
+<pre><code>import ElementPlus from 'element-plus';
+import 'element-plus/theme-chalk/index.css';
+
+app.
+    use(ElementPlus).
+    mount('#app')
+</code></pre>
+<h2 id="elementui-按需引入-vue3">elementui 按需引入 （Vue3）</h2>
+<ol>
+<li>自动按需引入
+<ul>
+<li>安装依赖</li>
+</ul>
+</li>
+</ol>
+<pre><code>cnpm install -D unplugin-vue-components unplugin-auto-import
+</code></pre>
+<ul>
+<li>配置vue.config.js</li>
+</ul>
+<pre><code>const AutoImport = require(&quot;unplugin-auto-import/webpack&quot;);
+const Components = require(&quot;unplugin-vue-components/webpack&quot;);
+const { ElementPlusResolver } = require(&quot;unplugin-vue-components/resolvers&quot;);
+
+module.exports = {
+lintOnSave: false,// 关闭语法检查
+configureWebpack: {
+  plugins: [
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
+},
+};
+</code></pre>
+<p><strong>注意：</strong> 当我们改了vue.config.js配置时，要关掉之前的项目，重新npm run serve，才能生效。</p>
+<h2 id="vue2按需引入">vue2按需引入</h2>
+<pre><code>npm install element-ui -S
+</code></pre>
+<pre><code>npm install babel-plugin-component -D
+</code></pre>
+<ul>
+<li>修改babel.config.js文件</li>
+</ul>
+<pre><code>module.exports = {
+  presets: [
+    '@vue/cli-plugin-babel/preset'
+    ],
+    plugins: [
+        [
+            &quot;component&quot;,
+            {
+                &quot;libraryName&quot;: &quot;element-ui&quot;,
+                &quot;styleLibraryName&quot;: &quot;theme-chalk&quot;
+            }
+        ]
+    ]
+}
+</code></pre>
+<ul>
+<li>新建index.js文件：demo 项目中，在 src 目录下，新建 plugins/element 目录，下面新增 index.js 文件 。整体访问路径为 '../src/plugins/element/index.js' 。当前 index.js 内容为完整组件列表和引入方式，可以根据自己的实际需求，只引入需要的组件以达到减小项目体积的目的 。</li>
+</ul>
+<pre><code>import Vue from 'vue';
+import {
+    Pagination,
+    Dialog,
+    Autocomplete,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Menu,
+    Submenu,
+    MenuItem,
+    MenuItemGroup,
+    Input,
+    InputNumber,
+    Radio,
+    RadioGroup,
+    RadioButton,
+    Checkbox,
+    CheckboxButton,
+    CheckboxGroup,
+    Switch,
+    Select,
+    Option,
+    OptionGroup,
+    Button,
+    ButtonGroup,
+    Table,
+    TableColumn,
+    DatePicker,
+    TimeSelect,
+    TimePicker,
+    Popover,
+    Tooltip,
+    Breadcrumb,
+    BreadcrumbItem,
+    Form,
+    FormItem,
+    Tabs,
+    TabPane,
+    Tag,
+    Tree,
+    Alert,
+    Slider,
+    Icon,
+    Row,
+    Col,
+    Upload,
+    Progress,
+    Spinner,
+    Badge,
+    Card,
+    Rate,
+    Steps,
+    Step,
+    Carousel,
+    CarouselItem,
+    Collapse,
+    CollapseItem,
+    Cascader,
+    ColorPicker,
+    Transfer,
+    Container,
+    Header,
+    Aside,
+    Main,
+    Footer,
+    Timeline,
+    TimelineItem,
+    Link,
+    Divider,
+    Image,
+    Calendar,
+    Backtop,
+    PageHeader,
+    CascaderPanel,
+    Loading,
+    MessageBox,
+    Message,
+    Notification
+} from 'element-ui';
+ 
+Vue.use(Pagination);
+Vue.use(Dialog);
+Vue.use(Autocomplete);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItem);
+Vue.use(MenuItemGroup);
+Vue.use(Input);
+Vue.use(InputNumber);
+Vue.use(Radio);
+Vue.use(RadioGroup);
+Vue.use(RadioButton);
+Vue.use(Checkbox);
+Vue.use(CheckboxButton);
+Vue.use(CheckboxGroup);
+Vue.use(Switch);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(OptionGroup);
+Vue.use(Button);
+Vue.use(ButtonGroup);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(DatePicker);
+Vue.use(TimeSelect);
+Vue.use(TimePicker);
+Vue.use(Popover);
+Vue.use(Tooltip);
+Vue.use(Breadcrumb);
+Vue.use(BreadcrumbItem);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Tag);
+Vue.use(Tree);
+Vue.use(Alert);
+Vue.use(Slider);
+Vue.use(Icon);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Upload);
+Vue.use(Progress);
+Vue.use(Spinner);
+Vue.use(Badge);
+Vue.use(Card);
+Vue.use(Rate);
+Vue.use(Steps);
+Vue.use(Step);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
+Vue.use(Cascader);
+Vue.use(ColorPicker);
+Vue.use(Transfer);
+Vue.use(Container);
+Vue.use(Header);
+Vue.use(Aside);
+Vue.use(Main);
+Vue.use(Footer);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
+Vue.use(Link);
+Vue.use(Divider);
+Vue.use(Image);
+Vue.use(Calendar);
+Vue.use(Backtop);
+Vue.use(PageHeader);
+Vue.use(CascaderPanel);
+ 
+Vue.use(Loading.directive);
+ 
+Vue.prototype.$loading = Loading.service;
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
+</code></pre>
+<ul>
+<li>main.js中引入</li>
+</ul>
+<pre><code>import '../src/plugins/element'
+</code></pre>
+<h2 id="vue2全部引入">vue2全部引入</h2>
+<pre><code>npm install element-ui -S
+</code></pre>
+<pre><code>import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+</code></pre>
+]]></content>
+    </entry>
+</feed>
